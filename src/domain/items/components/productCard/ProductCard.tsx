@@ -1,0 +1,140 @@
+import clsx from 'clsx';
+import { cva, type VariantProps } from 'class-variance-authority';
+import type { HTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { Card, CardActions, CardContent, CardMedia } from '@src/components/card';
+import HeartButton from '@src/components/button/heartButton';
+import { cn } from '@src/shared/utils/cn';
+import ProductImg from './productImg';
+
+const productCardStyles = cva('', {
+  variants: {
+    size: {
+      sm: 'h-[317px] w-[221px]',
+      md: 'h-[378px] w-[282px]',
+      lg: 'h-[378px] w-[282px]',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+const titleStyles = cva("font-['Pretendard'] font-medium text-gray-800", {
+  variants: {
+    size: {
+      sm: 'text-[14px] leading-[24px]',
+      md: 'text-[14px] leading-[24px]',
+      lg: 'text-[14px] leading-[24px]',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+const priceStyles = cva("font-['Pretendard'] font-bold text-gray-800", {
+  variants: {
+    size: {
+      sm: 'text-[16px] leading-[26px]',
+      md: 'text-[16px] leading-[26px]',
+      lg: 'text-[16px] leading-[26px]',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+const contentStyles = cva('gap-[6px] px-4 pt-[6px]', {
+  variants: {
+    size: {
+      sm: '',
+      md: '',
+      lg: '',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+const actionStyles = cva('mt-[-8px] px-4 pb-0 text-gray-500', {
+  variants: {
+    size: {
+      sm: '',
+      md: '',
+      lg: '',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
+export interface ProductCardProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>, VariantProps<typeof productCardStyles> {
+  imageUrl: string;
+  imageAlt?: string;
+  title: string;
+  price?: string;
+  likeCount?: number;
+  isLiked?: boolean;
+  onLikeToggle?: (nextLiked: boolean) => void;
+  showLike?: boolean;
+}
+
+export default function ProductCard({
+  imageUrl,
+  imageAlt,
+  title,
+  price,
+  likeCount,
+  isLiked,
+  onLikeToggle,
+  showLike,
+  size,
+  className,
+  ...props
+}: ProductCardProps) {
+  const shouldShowLike = showLike ?? true;
+  const resolvedLikeCount = likeCount ?? 0;
+  const resolvedSize = size ?? 'md';
+  const resolvedClassName = twMerge(clsx(productCardStyles({ size }), className), cn('box-border'));
+  const resolvedContentClassName = twMerge(clsx(contentStyles({ size })), cn('box-border'));
+  const resolvedActionClassName = twMerge(clsx(actionStyles({ size })), cn('box-border'));
+  const resolvedMediaClassName = clsx(
+    resolvedSize === 'sm' ? 'h-[221px] w-[221px]' : 'h-[282px] w-[282px]',
+    'shrink-0',
+  );
+  const resolvedImageWrapperClassName =
+    resolvedSize === 'sm' ? 'h-[221px] w-[221px]' : 'h-[282px] w-[282px]';
+
+  return (
+    <Card surface="flat" size={size} clickable className={resolvedClassName} {...props}>
+      <CardMedia aspect="auto" className={resolvedMediaClassName}>
+        <ProductImg
+          src={imageUrl}
+          alt={imageAlt ?? title}
+          ratio="square"
+          wrapperClassName={resolvedImageWrapperClassName}
+          className="h-full w-full object-cover"
+        />
+      </CardMedia>
+      <CardContent size={size} className={resolvedContentClassName}>
+        <p className={clsx(titleStyles({ size }), 'line-clamp-1')}>{title}</p>
+        {price && <p className={clsx(priceStyles({ size }), 'line-clamp-1')}>{price}</p>}
+      </CardContent>
+      {shouldShowLike && (
+        <CardActions size={size} className={resolvedActionClassName}>
+          <HeartButton
+            size="sm"
+            liked={isLiked}
+            count={resolvedLikeCount}
+            onToggle={onLikeToggle}
+          />
+        </CardActions>
+      )}
+    </Card>
+  );
+}
