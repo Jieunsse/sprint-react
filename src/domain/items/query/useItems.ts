@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@shared/query/queryKeys';
 import { getItems } from '../apis/getProducts';
+import type { GetItemsParams } from '../types/item';
 
-export function useItems() {
+export function useItems(params: GetItemsParams = {}) {
   return useQuery({
-    queryKey: queryKeys.items,
-    queryFn: getItems,
+    queryKey: [...queryKeys.items, params],
+    queryFn: () => getItems(params),
   });
 }

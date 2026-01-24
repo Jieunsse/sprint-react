@@ -15,3 +15,10 @@ export interface GetItemsResponse {
   totalCount: number;
   list: Item[];
 }
+
+export interface GetItemsParams {
+  page?: number;
+  pageSize?: number;
+  orderBy?: 'favorite' | 'recent';
+  keyword?: string;
+}
