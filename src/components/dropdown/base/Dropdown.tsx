@@ -34,6 +34,10 @@ export function Dropdown<T>({
   placeholder = '선택하세요',
   onSelect,
   disabled,
+  triggerVariant,
+  triggerIconSrc,
+  triggerAriaLabel,
+  menuClassName,
 }: DropdownProps<T>) {
   const [open, setOpen] = useState(false);
 
@@ -49,10 +53,13 @@ export function Dropdown<T>({
       <DropdownTrigger
         label={selectedOption?.label ?? placeholder}
         disabled={disabled}
+        variant={triggerVariant}
+        iconSrc={triggerIconSrc}
+        ariaLabel={triggerAriaLabel}
         onClick={() => setOpen((prev) => !prev)}
       />
 
-      <DropdownMenu open={open}>
+      <DropdownMenu open={open} className={menuClassName}>
         {options.map((option) => (
           <DropdownItem
             key={String(option.value)}
