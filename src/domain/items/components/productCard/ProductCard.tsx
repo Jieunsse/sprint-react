@@ -10,9 +10,9 @@ import ProductImg from './productImg';
 const productCardStyles = cva('', {
   variants: {
     size: {
-      sm: 'h-[317px] w-[221px]',
-      md: 'h-[378px] w-[282px]',
-      lg: 'h-[378px] w-[282px]',
+      sm: 'w-full',
+      md: 'w-full',
+      lg: 'w-full',
     },
   },
   defaultVariants: {
@@ -99,25 +99,18 @@ export default function ProductCard({
 }: ProductCardProps) {
   const shouldShowLike = showLike ?? true;
   const resolvedLikeCount = likeCount ?? 0;
-  const resolvedSize = size ?? 'md';
   const resolvedClassName = twMerge(clsx(productCardStyles({ size }), className), cn('box-border'));
   const resolvedContentClassName = twMerge(clsx(contentStyles({ size })), cn('box-border'));
   const resolvedActionClassName = twMerge(clsx(actionStyles({ size })), cn('box-border'));
-  const resolvedMediaClassName = clsx(
-    resolvedSize === 'sm' ? 'h-[221px] w-[221px]' : 'h-[282px] w-[282px]',
-    'shrink-0',
-  );
-  const resolvedImageWrapperClassName =
-    resolvedSize === 'sm' ? 'h-[221px] w-[221px]' : 'h-[282px] w-[282px]';
 
   return (
     <Card surface="flat" size={size} clickable className={resolvedClassName} {...props}>
-      <CardMedia aspect="auto" className={resolvedMediaClassName}>
+      <CardMedia aspect="square" className="w-full">
         <ProductImg
           src={imageUrl}
           alt={imageAlt ?? title}
           ratio="square"
-          wrapperClassName={resolvedImageWrapperClassName}
+          wrapperClassName="h-full w-full"
           className="h-full w-full object-cover"
         />
       </CardMedia>
