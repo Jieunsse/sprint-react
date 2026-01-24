@@ -9,4 +9,8 @@ export interface DropdownProps<T = string> {
   placeholder?: string;
   onSelect: (value: T) => void;
   disabled?: boolean;
+  triggerVariant?: 'default' | 'icon';
+  triggerIconSrc?: string;
+  triggerAriaLabel?: string;
+  menuClassName?: string;
 }

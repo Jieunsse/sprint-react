@@ -1,9 +1,14 @@
 import { cva } from 'class-variance-authority';
 
 export const triggerStyle = cva(
-  "grid h-[42px] min-w-[130px] w-auto grid-cols-[1fr_auto] items-center gap-[10px] rounded-[12px] border border-solid border-gray-200 px-[20px] py-[8px] text-[16px] font-normal leading-[26px] text-gray-800 box-border transition font-['Pretendard']",
+  "rounded-[12px] border border-solid border-gray-200 box-border transition font-['Pretendard']",
   {
     variants: {
+      variant: {
+        default:
+          'grid h-[42px] min-w-[130px] w-auto grid-cols-[1fr_auto] items-center gap-[10px] px-[20px] py-[8px] text-[16px] font-normal leading-[26px] text-gray-800',
+        icon: 'flex h-[42px] w-[42px] items-center justify-center p-0',
+      },
       disabled: {
         true: 'cursor-not-allowed bg-gray-100 text-gray-400',
         false: 'cursor-pointer bg-white hover:bg-gray-50',
@@ -11,6 +16,7 @@ export const triggerStyle = cva(
     },
     defaultVariants: {
       disabled: false,
+      variant: 'default',
     },
   },
 );
