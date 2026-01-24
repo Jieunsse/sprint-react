@@ -1,3 +1,3 @@
 export const queryKeys = {
-  products: ['products'] as const,
+  items: ['items'] as const,
 };
