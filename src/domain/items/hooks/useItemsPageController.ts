@@ -10,10 +10,28 @@ import { useItems } from '../query/useItems';
 import { useItemsPageDerived } from './useItemsPageDerived';
 import { useItemsPageState } from './useItemsPageState';
 
+const BREAKPOINT_MD = 768;
+const BREAKPOINT_LG = 1024;
+const PAGE_SIZE_SM = 4;
+const PAGE_SIZE_MD = 6;
+const PAGE_SIZE_LG = 10;
+const BEST_PAGE_SIZE_SM = 1;
+const BEST_PAGE_SIZE_MD = 2;
+const BEST_PAGE_SIZE_LG = 4;
+const PAGE_GROUP_SIZE = 5;
+const FIRST_PAGE = 1;
+const SSR_WIDTH_FALLBACK = 1024;
+
 function getResponsiveSizes(width: number) {
   return {
-    pageSize: width >= 1024 ? 10 : width >= 768 ? 6 : 4,
-    bestPageSize: width >= 1024 ? 4 : width >= 768 ? 2 : 1,
+    pageSize:
+      width >= BREAKPOINT_LG ? PAGE_SIZE_LG : width >= BREAKPOINT_MD ? PAGE_SIZE_MD : PAGE_SIZE_SM,
+    bestPageSize:
+      width >= BREAKPOINT_LG
+        ? BEST_PAGE_SIZE_LG
+        : width >= BREAKPOINT_MD
+          ? BEST_PAGE_SIZE_MD
+          : BEST_PAGE_SIZE_SM,
   };
 }
 
@@ -27,13 +45,13 @@ function getWindowWidth() {
 }
 
 function getServerWidth() {
-  return 1024;
+  return SSR_WIDTH_FALLBACK;
 }
 
 export function useItemsPageController() {
   const {
-    selected,
-    keyword,
+    selectedOrder,
+    appliedKeyword,
     searchInput,
     currentPage,
     likedIds,
@@ -46,16 +64,15 @@ export function useItemsPageController() {
 
   const width = useSyncExternalStore(subscribeToResize, getWindowWidth, getServerWidth);
   const { pageSize, bestPageSize } = useMemo(() => getResponsiveSizes(width), [width]);
-  const pageGroupSize = 5;
-  const trimmedKeyword = useMemo(() => keyword.trim(), [keyword]);
+  const trimmedKeyword = useMemo(() => appliedKeyword.trim(), [appliedKeyword]);
 
   useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(FIRST_PAGE);
   }, [pageSize, setCurrentPage]);
 
   const bestItemsParams = useMemo(
     () => ({
-      page: 1,
+      page: FIRST_PAGE,
       pageSize: bestPageSize,
       orderBy: 'favorite' as const,
     }),
@@ -65,10 +82,10 @@ export function useItemsPageController() {
     () => ({
       page: currentPage,
       pageSize,
-      orderBy: selected,
+      orderBy: selectedOrder,
       keyword: trimmedKeyword ? trimmedKeyword : undefined,
     }),
-    [currentPage, pageSize, selected, trimmedKeyword],
+    [currentPage, pageSize, selectedOrder, trimmedKeyword],
   );
 
   const bestItemsQuery = useItems(bestItemsParams);
@@ -80,7 +97,7 @@ export function useItemsPageController() {
     pageSize,
     currentPage,
     keyword: trimmedKeyword,
-    pageGroupSize,
+    pageGroupSize: PAGE_GROUP_SIZE,
   });
 
   const handleSearchInputChange = useCallback(
@@ -98,7 +115,7 @@ export function useItemsPageController() {
     [applySearch],
   );
   const handlePrevPage = useCallback(() => {
-    setCurrentPage((page) => Math.max(1, page - 1));
+    setCurrentPage((page) => Math.max(FIRST_PAGE, page - 1));
   }, [setCurrentPage]);
   const handleNextPage = useCallback(() => {
     setCurrentPage((page) => Math.min(totalPages, page + 1));
@@ -108,7 +125,7 @@ export function useItemsPageController() {
   const pageNumbers = Array.from({ length: pageCount }, (_, index) => pageGroupStart + index);
 
   return {
-    selected,
+    selectedOrder,
     searchInput,
     currentPage,
     likedIds,
