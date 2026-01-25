@@ -46,7 +46,7 @@ const priceStyles = cva("font-['Pretendard'] font-bold text-gray-800", {
   },
 });
 
-const contentStyles = cva('gap-[6px] px-4 pt-[6px]', {
+const contentStyles = cva('gap-[6px] px-0 pt-[6px]', {
   variants: {
     size: {
       sm: '',
@@ -59,7 +59,7 @@ const contentStyles = cva('gap-[6px] px-4 pt-[6px]', {
   },
 });
 
-const actionStyles = cva('mt-[-8px] px-4 pb-0 text-gray-500', {
+const actionStyles = cva('mt-[-8px] px-0 pb-0 text-gray-500', {
   variants: {
     size: {
       sm: '',
@@ -104,12 +104,19 @@ export default function ProductCard({
   const resolvedActionClassName = twMerge(clsx(actionStyles({ size })), cn('box-border'));
 
   return (
-    <Card surface="flat" size={size} clickable className={resolvedClassName} {...props}>
+    <Card
+      surface="flat"
+      size={size}
+      clickable
+      className={twMerge(resolvedClassName, 'border-0')}
+      {...props}
+    >
       <CardMedia aspect="square" className="w-full">
         <ProductImg
           src={imageUrl}
           alt={imageAlt ?? title}
           ratio="square"
+          radius="lg"
           wrapperClassName="h-full w-full"
           className="h-full w-full object-cover"
         />

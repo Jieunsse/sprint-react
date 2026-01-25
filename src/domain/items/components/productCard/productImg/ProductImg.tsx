@@ -26,9 +26,16 @@ const productImgWrapperStyles = cva('relative overflow-hidden bg-gray-100', {
       landscape: 'aspect-[4/3]',
       auto: '',
     },
+    radius: {
+      none: 'rounded-none',
+      sm: 'rounded-[8px]',
+      md: 'rounded-[12px]',
+      lg: 'rounded-[16px]',
+    },
   },
   defaultVariants: {
     ratio: 'portrait',
+    radius: 'none',
   },
 });
 
@@ -52,7 +59,7 @@ export default function ProductImg({
   ...props
 }: ProductImgProps) {
   const resolvedWrapperClassName = twMerge(
-    clsx(productImgWrapperStyles({ ratio }), wrapperClassName),
+    clsx(productImgWrapperStyles({ ratio, radius }), wrapperClassName),
     cn('box-border'),
   );
   const resolvedImgClassName = twMerge(
