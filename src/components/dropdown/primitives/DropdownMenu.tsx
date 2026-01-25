@@ -8,9 +8,17 @@ interface DropdownMenuProps {
   className?: string;
   id?: string;
   ariaLabelledBy?: string;
+  onEscape?: () => void;
 }
 
-export function DropdownMenu({ open, children, className, id, ariaLabelledBy }: DropdownMenuProps) {
+export function DropdownMenu({
+  open,
+  children,
+  className,
+  id,
+  ariaLabelledBy,
+  onEscape,
+}: DropdownMenuProps) {
   const listRef = useRef<HTMLUListElement>(null);
   const resolvedClassName = cn(menuStyle(), className, 'box-border');
 
@@ -52,6 +60,10 @@ export function DropdownMenu({ open, children, className, id, ariaLabelledBy }: 
     if (event.key === 'End') {
       event.preventDefault();
       options[options.length - 1].focus();
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      onEscape?.();
     }
   };
 

@@ -64,7 +64,13 @@ export function Dropdown<T>({
         onClick={() => setOpen((prev) => !prev)}
       />
 
-      <DropdownMenu open={open} className={menuClassName} id={menuId} ariaLabelledBy={triggerId}>
+      <DropdownMenu
+        open={open}
+        className={menuClassName}
+        id={menuId}
+        ariaLabelledBy={triggerId}
+        onEscape={() => setOpen(false)}
+      >
         {options.map((option) => (
           <DropdownItem
             key={String(option.value)}
