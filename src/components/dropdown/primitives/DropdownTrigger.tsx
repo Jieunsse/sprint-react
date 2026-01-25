@@ -9,6 +9,9 @@ interface DropdownTriggerProps {
   variant?: 'default' | 'icon';
   iconSrc?: string;
   ariaLabel?: string;
+  id?: string;
+  ariaExpanded?: boolean;
+  ariaControls?: string;
 }
 
 export function DropdownTrigger({
@@ -18,6 +21,9 @@ export function DropdownTrigger({
   variant = 'default',
   iconSrc,
   ariaLabel,
+  id,
+  ariaExpanded,
+  ariaControls,
 }: DropdownTriggerProps) {
   const isIcon = variant === 'icon';
   const icon = iconSrc ?? arrowDown;
@@ -28,6 +34,10 @@ export function DropdownTrigger({
       disabled={disabled}
       onClick={onClick}
       className={cn(triggerStyle({ disabled, variant }))}
+      id={id}
+      aria-expanded={ariaExpanded}
+      aria-controls={ariaControls}
+      aria-haspopup="listbox"
       aria-label={isIcon ? (ariaLabel ?? label) : undefined}
     >
       {isIcon ? (

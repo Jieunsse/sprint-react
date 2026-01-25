@@ -27,13 +27,19 @@ export function Header() {
           />
         </Link>
 
-        <nav className="ml-8 flex items-center gap-4">
-          <Link to="/" className={cn(navItem({ active: isFreePage }))}>
-            자유게시판
-          </Link>
-          <Link to="/items" className={cn(navItem({ active: isItemsPage }))}>
-            중고마켓
-          </Link>
+        <nav className="ml-8">
+          <ul className="flex items-center gap-4 list-none p-0 m-0">
+            <li>
+              <Link to="/" className={cn(navItem({ active: isFreePage }))}>
+                자유게시판
+              </Link>
+            </li>
+            <li>
+              <Link to="/items" className={cn(navItem({ active: isItemsPage }))}>
+                중고마켓
+              </Link>
+            </li>
+          </ul>
         </nav>
       </div>
 

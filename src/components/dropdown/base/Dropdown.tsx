@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import type { DropdownProps } from '../types/types';
 import { DropdownTrigger } from '../primitives/DropdownTrigger';
 import { DropdownMenu } from '../primitives/DropdownMenu';
@@ -40,6 +40,8 @@ export function Dropdown<T>({
   menuClassName,
 }: DropdownProps<T>) {
   const [open, setOpen] = useState(false);
+  const triggerId = useId();
+  const menuId = useId();
 
   const selectedOption = options.find((option) => option.value === value);
 
@@ -56,10 +58,13 @@ export function Dropdown<T>({
         variant={triggerVariant}
         iconSrc={triggerIconSrc}
         ariaLabel={triggerAriaLabel}
+        id={triggerId}
+        ariaExpanded={open}
+        ariaControls={menuId}
         onClick={() => setOpen((prev) => !prev)}
       />
 
-      <DropdownMenu open={open} className={menuClassName}>
+      <DropdownMenu open={open} className={menuClassName} id={menuId} ariaLabelledBy={triggerId}>
         {options.map((option) => (
           <DropdownItem
             key={String(option.value)}

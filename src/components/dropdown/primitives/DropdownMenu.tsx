@@ -6,12 +6,18 @@ interface DropdownMenuProps {
   open: boolean;
   children: ReactNode;
   className?: string;
+  id?: string;
+  ariaLabelledBy?: string;
 }
 
-export function DropdownMenu({ open, children, className }: DropdownMenuProps) {
+export function DropdownMenu({ open, children, className, id, ariaLabelledBy }: DropdownMenuProps) {
   if (!open) return null;
 
   const resolvedClassName = cn(menuStyle(), className, 'box-border');
 
-  return <ul className={resolvedClassName}>{children}</ul>;
+  return (
+    <ul id={id} role="listbox" aria-labelledby={ariaLabelledBy} className={resolvedClassName}>
+      {children}
+    </ul>
+  );
 }

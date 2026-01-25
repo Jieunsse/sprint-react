@@ -50,6 +50,7 @@ export default function SearchBar({
   align = 'left',
   placeholder = '검색할 상품을 입력해주세요',
   disabled,
+  'aria-label': ariaLabel,
   ...props
 }: SearchBarProps) {
   const resolvedContainerClassName = cn(
@@ -65,10 +66,11 @@ export default function SearchBar({
     <div className={resolvedContainerClassName}>
       <img src={searchIcon} alt="" aria-hidden className="h-6 w-6" />
       <input
-        type="text"
+        type="search"
         className={resolvedInputClassName}
         placeholder={placeholder}
         disabled={disabled}
+        aria-label={ariaLabel ?? '상품 검색'}
         {...props}
       />
     </div>
