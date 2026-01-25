@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react';
 import { menuStyle } from '../styles/dropdown.styles';
-import clsx from 'clsx';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '@src/shared/utils/cn';
 
 interface DropdownMenuProps {
@@ -13,7 +11,7 @@ interface DropdownMenuProps {
 export function DropdownMenu({ open, children, className }: DropdownMenuProps) {
   if (!open) return null;
 
-  const resolvedClassName = twMerge(clsx(menuStyle(), className), cn('box-border'));
+  const resolvedClassName = cn(menuStyle(), className, 'box-border');
 
   return <ul className={resolvedClassName}>{children}</ul>;
 }

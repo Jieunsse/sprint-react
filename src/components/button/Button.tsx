@@ -1,6 +1,4 @@
-import clsx from 'clsx';
 import { cva } from 'class-variance-authority';
-import { twMerge } from 'tailwind-merge';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '@src/shared/utils/cn';
 import arrowBackIcon from './assets/arrow_back.svg';
@@ -54,9 +52,10 @@ export default function Button({
       icon
     );
 
-  const resolvedClassName = twMerge(
-    clsx(buttonStyles({ disabled: resolvedDisabled, fullWidth }), className),
-    cn('box-border'),
+  const resolvedClassName = cn(
+    buttonStyles({ disabled: resolvedDisabled, fullWidth }),
+    className,
+    'box-border',
   );
 
   return (

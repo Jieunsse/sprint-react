@@ -1,7 +1,5 @@
-import clsx from 'clsx';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { HTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '@src/shared/utils/cn';
 
 const cardStyles = cva('flex overflow-hidden rounded-[16px] bg-white text-gray-900', {
@@ -102,9 +100,10 @@ export function Card({
   ...props
 }: CardProps) {
   const isInteractive = clickable ?? Boolean(onClick);
-  const resolvedClassName = twMerge(
-    clsx(cardStyles({ layout, size, surface, clickable: isInteractive }), className),
-    cn('box-border'),
+  const resolvedClassName = cn(
+    cardStyles({ layout, size, surface, clickable: isInteractive }),
+    className,
+    'box-border',
   );
 
   return (
@@ -119,22 +118,19 @@ export function Card({
 }
 
 export function CardMedia({ aspect, className, ...props }: CardMediaProps) {
-  const resolvedClassName = twMerge(clsx(cardMediaStyles({ aspect }), className), cn('box-border'));
+  const resolvedClassName = cn(cardMediaStyles({ aspect }), className, 'box-border');
 
   return <div className={resolvedClassName} {...props} />;
 }
 
 export function CardContent({ size, className, ...props }: CardContentProps) {
-  const resolvedClassName = twMerge(clsx(cardContentStyles({ size }), className), cn('box-border'));
+  const resolvedClassName = cn(cardContentStyles({ size }), className, 'box-border');
 
   return <div className={resolvedClassName} {...props} />;
 }
 
 export function CardActions({ size, align, className, ...props }: CardActionsProps) {
-  const resolvedClassName = twMerge(
-    clsx(cardActionsStyles({ size, align }), className),
-    cn('box-border'),
-  );
+  const resolvedClassName = cn(cardActionsStyles({ size, align }), className, 'box-border');
 
   return <div className={resolvedClassName} {...props} />;
 }

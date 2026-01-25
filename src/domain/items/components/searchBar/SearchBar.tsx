@@ -1,6 +1,4 @@
-import clsx from 'clsx';
 import { cva } from 'class-variance-authority';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '@src/shared/utils/cn';
 import searchIcon from './assets/ic_search.svg';
 import type { InputHTMLAttributes } from 'react';
@@ -54,17 +52,14 @@ export default function SearchBar({
   disabled,
   ...props
 }: SearchBarProps) {
-  const resolvedContainerClassName = twMerge(
-    clsx(containerStyle({ size, disabled }), containerClassName, {
-      'pointer-events-none': disabled,
-    }),
-    cn('box-border'),
+  const resolvedContainerClassName = cn(
+    containerStyle({ size, disabled }),
+    containerClassName,
+    { 'pointer-events-none': disabled },
+    'box-border',
   );
 
-  const resolvedInputClassName = twMerge(
-    clsx(inputStyle({ align }), className),
-    cn('placeholder:font-normal'),
-  );
+  const resolvedInputClassName = cn(inputStyle({ align }), className, 'placeholder:font-normal');
 
   return (
     <div className={resolvedContainerClassName}>

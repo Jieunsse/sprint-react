@@ -1,6 +1,5 @@
 import { triggerStyle } from '../styles/dropdown.styles';
-import { twMerge } from 'tailwind-merge';
-import clsx from 'clsx';
+import { cn } from '@src/shared/utils/cn';
 import arrowDown from '../assets/ic_arrow_down.svg';
 
 interface DropdownTriggerProps {
@@ -28,7 +27,7 @@ export function DropdownTrigger({
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className={twMerge(clsx(triggerStyle({ disabled, variant })))}
+      className={cn(triggerStyle({ disabled, variant }))}
       aria-label={isIcon ? (ariaLabel ?? label) : undefined}
     >
       {isIcon ? (

@@ -1,7 +1,5 @@
-import clsx from 'clsx';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { HTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { Card, CardActions, CardContent, CardMedia } from '@src/components/card';
 import HeartButton from '@src/components/button/heartButton';
 import { cn } from '@src/shared/utils/cn';
@@ -99,16 +97,16 @@ export default function ProductCard({
 }: ProductCardProps) {
   const shouldShowLike = showLike ?? true;
   const resolvedLikeCount = likeCount ?? 0;
-  const resolvedClassName = twMerge(clsx(productCardStyles({ size }), className), cn('box-border'));
-  const resolvedContentClassName = twMerge(clsx(contentStyles({ size })), cn('box-border'));
-  const resolvedActionClassName = twMerge(clsx(actionStyles({ size })), cn('box-border'));
+  const resolvedClassName = cn(productCardStyles({ size }), className, 'box-border');
+  const resolvedContentClassName = cn(contentStyles({ size }), 'box-border');
+  const resolvedActionClassName = cn(actionStyles({ size }), 'box-border');
 
   return (
     <Card
       surface="flat"
       size={size}
       clickable
-      className={twMerge(resolvedClassName, 'border-0')}
+      className={cn(resolvedClassName, 'border-0')}
       {...props}
     >
       <CardMedia aspect="square" className="w-full">
@@ -122,8 +120,8 @@ export default function ProductCard({
         />
       </CardMedia>
       <CardContent size={size} className={resolvedContentClassName}>
-        <p className={clsx(titleStyles({ size }), 'line-clamp-1')}>{title}</p>
-        {price && <p className={clsx(priceStyles({ size }), 'line-clamp-1')}>{price}</p>}
+        <p className={cn(titleStyles({ size }), 'line-clamp-1')}>{title}</p>
+        {price && <p className={cn(priceStyles({ size }), 'line-clamp-1')}>{price}</p>}
       </CardContent>
       {shouldShowLike && (
         <CardActions size={size} className={resolvedActionClassName}>

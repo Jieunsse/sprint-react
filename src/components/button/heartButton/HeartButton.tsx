@@ -1,7 +1,5 @@
-import clsx from 'clsx';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { ButtonHTMLAttributes, MouseEvent } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '@src/shared/utils/cn';
 import heartActiveIcon from './assets/heart_large_active.svg';
 import heartInactiveIcon from './assets/heart_large_unActive.svg';
@@ -66,13 +64,14 @@ export default function HeartButton({
   ...props
 }: HeartButtonProps) {
   const resolvedLiked = liked ?? false;
-  const resolvedClassName = twMerge(
-    clsx(
-      heartButtonStyles({ size, liked: resolvedLiked, isDisabled: Boolean(disabled) }),
-      className,
-    ),
-    cn('box-border'),
+  const resolvedClassName = cn(
+    heartButtonStyles({ size, liked: resolvedLiked, isDisabled: Boolean(disabled) }),
+    className,
+    'box-border',
   );
+  const resolvedAriaLabel =
+    ariaLabel ??
+    `좋아요${typeof count === 'number' ? ` ${count}개` : ''}, ${resolvedLiked ? '활성' : '비활성'}`;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
@@ -83,14 +82,14 @@ export default function HeartButton({
   return (
     <button
       type="button"
-      aria-label={ariaLabel ?? '좋아요'}
+      aria-label={resolvedAriaLabel}
       aria-pressed={resolvedLiked}
       className={resolvedClassName}
       disabled={disabled}
       onClick={handleClick}
       {...props}
     >
-      <span className={clsx(heartIconStyles({ size }))} aria-hidden>
+      <span className={cn(heartIconStyles({ size }))} aria-hidden>
         <img
           src={resolvedLiked ? heartActiveIcon : heartInactiveIcon}
           alt=""
@@ -100,7 +99,7 @@ export default function HeartButton({
       </span>
       {typeof count === 'number' && (
         <span
-          className={clsx('font-medium text-gray-600', {
+          className={cn('font-medium text-gray-600', {
             'text-rose-600': resolvedLiked,
           })}
         >

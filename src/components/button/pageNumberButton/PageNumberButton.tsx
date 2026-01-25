@@ -1,7 +1,5 @@
-import clsx from 'clsx';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { ButtonHTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '@src/shared/utils/cn';
 import leftIcon from './assets/arrow_left.svg';
 import rightIcon from './assets/arrow_right.svg';
@@ -60,16 +58,17 @@ export default function PageNumberButton({
   'aria-label': ariaLabel,
   ...props
 }: PageNumberButtonProps) {
-  const resolvedClassName = twMerge(
-    clsx(pageNumberButtonStyles({ kind, isDisabled: disabled, isActive }), className),
-    cn('box-border'),
+  const resolvedClassName = cn(
+    pageNumberButtonStyles({ kind, isDisabled: disabled, isActive }),
+    className,
+    'box-border',
   );
 
   const content =
     kind === 'prev' ? (
-      <img src={leftIcon} alt="" aria-hidden className={clsx(iconStyles({ kind }))} />
+      <img src={leftIcon} alt="" aria-hidden className={cn(iconStyles({ kind }))} />
     ) : kind === 'next' ? (
-      <img src={rightIcon} alt="" aria-hidden className={clsx(iconStyles({ kind }))} />
+      <img src={rightIcon} alt="" aria-hidden className={cn(iconStyles({ kind }))} />
     ) : (
       <span>{page}</span>
     );

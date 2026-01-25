@@ -1,7 +1,5 @@
-import clsx from 'clsx';
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { ImgHTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '@src/shared/utils/cn';
 
 const productImgStyles = cva('block w-full object-cover', {
@@ -58,14 +56,12 @@ export default function ProductImg({
   wrapperClassName,
   ...props
 }: ProductImgProps) {
-  const resolvedWrapperClassName = twMerge(
-    clsx(productImgWrapperStyles({ ratio, radius }), wrapperClassName),
-    cn('box-border'),
+  const resolvedWrapperClassName = cn(
+    productImgWrapperStyles({ ratio, radius }),
+    wrapperClassName,
+    'box-border',
   );
-  const resolvedImgClassName = twMerge(
-    clsx(productImgStyles({ radius }), className),
-    cn('box-border'),
-  );
+  const resolvedImgClassName = cn(productImgStyles({ radius }), className, 'box-border');
 
   return (
     <div className={resolvedWrapperClassName}>
