@@ -117,7 +117,7 @@ export default function ItemsPage() {
             </div>
           </section>
         </section>
-        <ul className="grid grid-cols-2 gap-x-[24px] gap-y-[40px] mt-[24px] md:grid-cols-3 lg:grid-cols-5 list-none p-0 m-0">
+        <ul className="grid grid-cols-2 gap-x-[24px] gap-y-[40px] mt-[24px] md:grid-cols-3 md:justify-items-center lg:grid-cols-5 lg:justify-items-stretch list-none p-0 m-0">
           {itemsQuery.isLoading && (
             <li className="list-none">
               <p className="text-gray-500" role="status" aria-live="polite">
