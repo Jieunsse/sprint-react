@@ -2,11 +2,14 @@ import { useCallback, useState } from 'react';
 
 type OrderBy = 'recent' | 'favorite';
 
+const DEFAULT_ORDER: OrderBy = 'recent';
+const FIRST_PAGE = 1;
+
 export function useItemsPageState() {
-  const [selected, setSelected] = useState<OrderBy>('recent');
-  const [keyword, setKeyword] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState<OrderBy>(DEFAULT_ORDER);
+  const [appliedKeyword, setAppliedKeyword] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(FIRST_PAGE);
   const [likedIds, setLikedIds] = useState<Set<number>>(() => new Set());
 
   const handleLikeToggle = useCallback(
@@ -25,18 +28,18 @@ export function useItemsPageState() {
   );
 
   const applySearch = useCallback(() => {
-    setKeyword(searchInput);
-    setCurrentPage(1);
+    setAppliedKeyword(searchInput);
+    setCurrentPage(FIRST_PAGE);
   }, [searchInput]);
 
   const handleSelectOrder = useCallback((value: OrderBy) => {
-    setSelected(value);
-    setCurrentPage(1);
+    setSelectedOrder(value);
+    setCurrentPage(FIRST_PAGE);
   }, []);
 
   return {
-    selected,
-    keyword,
+    selectedOrder,
+    appliedKeyword,
     searchInput,
     currentPage,
     likedIds,

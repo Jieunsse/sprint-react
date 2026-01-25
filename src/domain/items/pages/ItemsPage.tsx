@@ -11,7 +11,7 @@ import { itemsOrderOptions } from '../utils/itemsOptions';
 
 export default function ItemsPage() {
   const {
-    selected,
+    selectedOrder,
     searchInput,
     currentPage,
     likedIds,
@@ -38,24 +38,31 @@ export default function ItemsPage() {
         <h2 className="font-['Pretendard'] text-[20px] font-bold leading-[32px] tracking-[0] align-middle text-secondary-900 mt-[24px]">
           베스트 상품
         </h2>
-        <section className="grid grid-cols-1 gap-[24px] mt-[16px] md:grid-cols-2 md:justify-items-center lg:grid-cols-4 lg:justify-items-stretch">
-          {bestItemsQuery.isLoading && <p className="text-gray-500">로딩 중...</p>}
+        <ul className="grid grid-cols-1 gap-[24px] mt-[16px] md:grid-cols-2 md:justify-items-center lg:grid-cols-4 lg:justify-items-stretch list-none p-0 m-0">
+          {bestItemsQuery.isLoading && (
+            <li className="list-none">
+              <p className="text-gray-500">로딩 중...</p>
+            </li>
+          )}
           {bestItemsQuery.isError && (
-            <p className="text-gray-500">베스트 상품을 불러오지 못했습니다.</p>
+            <li className="list-none">
+              <p className="text-gray-500">베스트 상품을 불러오지 못했습니다.</p>
+            </li>
           )}
           {bestItemsQuery.data?.list.map((item) => (
-            <ProductCard
-              key={item.id}
-              imageUrl={item.images?.[0] ?? ''}
-              title={item.name}
-              price={`${item.price.toLocaleString('ko-KR')}원`}
-              likeCount={item.favoriteCount}
-              isLiked={likedIds.has(item.id)}
-              onLikeToggle={handleLikeToggle(item.id)}
-              className="md:w-[343px] md:h-[434px] lg:w-[282px] lg:h-[378px]"
-            />
+            <li key={item.id} className="list-none">
+              <ProductCard
+                imageUrl={item.images?.[0] ?? ''}
+                title={item.name}
+                price={`${item.price.toLocaleString('ko-KR')}원`}
+                likeCount={item.favoriteCount}
+                isLiked={likedIds.has(item.id)}
+                onLikeToggle={handleLikeToggle(item.id)}
+                className="md:w-[343px] md:h-[434px] lg:w-[282px] lg:h-[378px]"
+              />
+            </li>
           ))}
-        </section>
+        </ul>
 
         <section className="mt-[24px] flex flex-col gap-[12px] md:flex-row md:items-center md:justify-between">
           <div className="flex items-center justify-between gap-[12px]">
@@ -68,7 +75,7 @@ export default function ItemsPage() {
               onClick={() => navigate('/additems')}
             />
           </div>
-          <section className="flex w-full items-center gap-[12px] md:w-auto">
+          <section className="flex w-full items-center gap-[12px] md:w-auto" role="search">
             <SearchBar
               containerClassName="w-full md:w-[325px]"
               value={searchInput}
@@ -83,7 +90,7 @@ export default function ItemsPage() {
             <div className="hidden md:block">
               <Dropdown
                 options={itemsOrderOptions}
-                value={selected}
+                value={selectedOrder}
                 placeholder="최신순"
                 onSelect={handleSelectOrder}
               />
@@ -91,7 +98,7 @@ export default function ItemsPage() {
             <div className="md:hidden">
               <Dropdown
                 options={itemsOrderOptions}
-                value={selected}
+                value={selectedOrder}
                 placeholder="최신순"
                 onSelect={handleSelectOrder}
                 triggerVariant="icon"
@@ -102,40 +109,59 @@ export default function ItemsPage() {
             </div>
           </section>
         </section>
-        <section className="grid grid-cols-2 gap-x-[24px] gap-y-[40px] mt-[24px] md:grid-cols-3 lg:grid-cols-5">
-          {itemsQuery.isLoading && <p className="text-gray-500">로딩 중...</p>}
-          {itemsQuery.isError && <p className="text-gray-500">상품을 불러오지 못했습니다.</p>}
+        <ul className="grid grid-cols-2 gap-x-[24px] gap-y-[40px] mt-[24px] md:grid-cols-3 lg:grid-cols-5 list-none p-0 m-0">
+          {itemsQuery.isLoading && (
+            <li className="list-none">
+              <p className="text-gray-500">로딩 중...</p>
+            </li>
+          )}
+          {itemsQuery.isError && (
+            <li className="list-none">
+              <p className="text-gray-500">상품을 불러오지 못했습니다.</p>
+            </li>
+          )}
           {filteredItems.map((item) => (
-            <ProductCard
-              key={item.id}
-              size="sm"
-              imageUrl={item.images?.[0] ?? ''}
-              title={item.name}
-              price={`${item.price.toLocaleString('ko-KR')}원`}
-              likeCount={item.favoriteCount}
-              isLiked={likedIds.has(item.id)}
-              onLikeToggle={handleLikeToggle(item.id)}
-              className="md:w-[221px] md:h-[317px] lg:w-full lg:h-auto"
-            />
+            <li key={item.id} className="list-none">
+              <ProductCard
+                size="sm"
+                imageUrl={item.images?.[0] ?? ''}
+                title={item.name}
+                price={`${item.price.toLocaleString('ko-KR')}원`}
+                likeCount={item.favoriteCount}
+                isLiked={likedIds.has(item.id)}
+                onLikeToggle={handleLikeToggle(item.id)}
+                className="md:w-[221px] md:h-[317px] lg:w-full lg:h-auto"
+              />
+            </li>
           ))}
-        </section>
-        <section className="flex justify-center gap-[8px] mt-[40px] mb-[35px] md:mt-[40px] md:mb-[72px]">
-          <PageNumberButton kind="prev" disabled={currentPage === 1} onClick={handlePrevPage} />
-          {pageNumbers.map((page) => (
-            <PageNumberButton
-              key={page}
-              kind="page"
-              page={page}
-              isActive={page === currentPage}
-              onClick={() => setCurrentPage(page)}
-            />
-          ))}
-          <PageNumberButton
-            kind="next"
-            disabled={currentPage === totalPages}
-            onClick={handleNextPage}
-          />
-        </section>
+        </ul>
+        <nav
+          className="flex justify-center gap-[8px] mt-[40px] mb-[35px] md:mt-[40px] md:mb-[72px]"
+          aria-label="페이지네이션"
+        >
+          <ul className="flex items-center gap-[8px] list-none p-0 m-0">
+            <li>
+              <PageNumberButton kind="prev" disabled={currentPage === 1} onClick={handlePrevPage} />
+            </li>
+            {pageNumbers.map((page) => (
+              <li key={page}>
+                <PageNumberButton
+                  kind="page"
+                  page={page}
+                  isActive={page === currentPage}
+                  onClick={() => setCurrentPage(page)}
+                />
+              </li>
+            ))}
+            <li>
+              <PageNumberButton
+                kind="next"
+                disabled={currentPage === totalPages}
+                onClick={handleNextPage}
+              />
+            </li>
+          </ul>
+        </nav>
       </main>
     </>
   );

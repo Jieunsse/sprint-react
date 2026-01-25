@@ -9,8 +9,10 @@ interface PaginationState {
   resetPage: () => void;
 }
 
+const FIRST_PAGE = 1;
+
 export const usePaginationStore = create<PaginationState>((set) => ({
-  page: 1,
+  page: FIRST_PAGE,
 
   setPage: (page) => set({ page }),
 
@@ -21,8 +23,8 @@ export const usePaginationStore = create<PaginationState>((set) => ({
 
   prevPage: () =>
     set((state) => ({
-      page: Math.max(1, state.page - 1),
+      page: Math.max(FIRST_PAGE, state.page - 1),
     })),
 
-  resetPage: () => set({ page: 1 }),
+  resetPage: () => set({ page: FIRST_PAGE }),
 }));
