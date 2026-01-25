@@ -74,6 +74,7 @@ export interface ProductCardProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>, VariantProps<typeof productCardStyles> {
   imageUrl: string;
   imageAlt?: string;
+  imagePriority?: boolean;
   title: string;
   price?: string;
   likeCount?: number;
@@ -85,6 +86,7 @@ export interface ProductCardProps
 export default function ProductCard({
   imageUrl,
   imageAlt,
+  imagePriority,
   title,
   price,
   likeCount,
@@ -113,6 +115,7 @@ export default function ProductCard({
         <ProductImg
           src={imageUrl}
           alt={imageAlt ?? title}
+          priority={imagePriority}
           ratio="square"
           radius="lg"
           wrapperClassName="h-full w-full"

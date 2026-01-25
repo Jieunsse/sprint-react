@@ -10,6 +10,8 @@ import { useItemsPageController } from '../hooks/useItemsPageController';
 import { itemsOrderOptions } from '../utils/itemsOptions';
 
 export default function ItemsPage() {
+  const bestPriorityLimit = 4;
+  const allPriorityLimit = 6;
   const {
     selectedOrder,
     searchInput,
@@ -53,7 +55,7 @@ export default function ItemsPage() {
               </p>
             </li>
           )}
-          {bestItemsQuery.data?.list.map((item) => (
+          {bestItemsQuery.data?.list.map((item, index) => (
             <li key={item.id} className="list-none">
               <ProductCard
                 imageUrl={item.images?.[0] ?? ''}
@@ -62,6 +64,7 @@ export default function ItemsPage() {
                 likeCount={item.favoriteCount}
                 isLiked={likedIds.has(item.id)}
                 onLikeToggle={handleLikeToggle(item.id)}
+                imagePriority={index < bestPriorityLimit}
                 className="md:w-[343px] md:h-[434px] lg:w-[282px] lg:h-[378px]"
               />
             </li>
@@ -132,7 +135,7 @@ export default function ItemsPage() {
               </p>
             </li>
           )}
-          {filteredItems.map((item) => (
+          {filteredItems.map((item, index) => (
             <li key={item.id} className="list-none">
               <ProductCard
                 size="sm"
@@ -142,6 +145,7 @@ export default function ItemsPage() {
                 likeCount={item.favoriteCount}
                 isLiked={likedIds.has(item.id)}
                 onLikeToggle={handleLikeToggle(item.id)}
+                imagePriority={index < allPriorityLimit}
                 className="md:w-[221px] md:h-[317px] lg:w-full lg:h-auto"
               />
             </li>
