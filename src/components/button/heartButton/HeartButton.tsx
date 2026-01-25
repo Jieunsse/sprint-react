@@ -18,7 +18,7 @@ const heartButtonStyles = cva(
         true: 'text-rose-600',
         false: 'text-gray-500',
       },
-      disabled: {
+      isDisabled: {
         true: 'cursor-not-allowed opacity-60',
         false: 'cursor-pointer hover:text-rose-500',
       },
@@ -26,7 +26,7 @@ const heartButtonStyles = cva(
     defaultVariants: {
       size: 'md',
       liked: false,
-      disabled: false,
+      isDisabled: false,
     },
   },
 );
@@ -45,7 +45,7 @@ const heartIconStyles = cva('flex items-center justify-center', {
 
 export interface HeartButtonProps
   extends
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick' | 'type'>,
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick' | 'onToggle' | 'type'>,
     VariantProps<typeof heartButtonStyles> {
   count?: number;
   liked?: boolean;
@@ -67,7 +67,10 @@ export default function HeartButton({
 }: HeartButtonProps) {
   const resolvedLiked = liked ?? false;
   const resolvedClassName = twMerge(
-    clsx(heartButtonStyles({ size, liked: resolvedLiked, disabled }), className),
+    clsx(
+      heartButtonStyles({ size, liked: resolvedLiked, isDisabled: Boolean(disabled) }),
+      className,
+    ),
     cn('box-border'),
   );
 
