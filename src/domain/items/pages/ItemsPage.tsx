@@ -41,12 +41,16 @@ export default function ItemsPage() {
         <ul className="grid grid-cols-1 gap-[24px] mt-[16px] md:grid-cols-2 md:justify-items-center lg:grid-cols-4 lg:justify-items-stretch list-none p-0 m-0">
           {bestItemsQuery.isLoading && (
             <li className="list-none">
-              <p className="text-gray-500">로딩 중...</p>
+              <p className="text-gray-500" role="status" aria-live="polite">
+                로딩 중...
+              </p>
             </li>
           )}
           {bestItemsQuery.isError && (
             <li className="list-none">
-              <p className="text-gray-500">베스트 상품을 불러오지 못했습니다.</p>
+              <p className="text-gray-500" role="alert">
+                베스트 상품을 불러오지 못했습니다.
+              </p>
             </li>
           )}
           {bestItemsQuery.data?.list.map((item) => (
@@ -75,7 +79,11 @@ export default function ItemsPage() {
               onClick={() => navigate('/additems')}
             />
           </div>
-          <section className="flex w-full items-center gap-[12px] md:w-auto" role="search">
+          <section
+            className="flex w-full items-center gap-[12px] md:w-auto"
+            role="search"
+            aria-label="상품 검색"
+          >
             <SearchBar
               containerClassName="w-full md:w-[325px]"
               value={searchInput}
@@ -112,12 +120,16 @@ export default function ItemsPage() {
         <ul className="grid grid-cols-2 gap-x-[24px] gap-y-[40px] mt-[24px] md:grid-cols-3 lg:grid-cols-5 list-none p-0 m-0">
           {itemsQuery.isLoading && (
             <li className="list-none">
-              <p className="text-gray-500">로딩 중...</p>
+              <p className="text-gray-500" role="status" aria-live="polite">
+                로딩 중...
+              </p>
             </li>
           )}
           {itemsQuery.isError && (
             <li className="list-none">
-              <p className="text-gray-500">상품을 불러오지 못했습니다.</p>
+              <p className="text-gray-500" role="alert">
+                상품을 불러오지 못했습니다.
+              </p>
             </li>
           )}
           {filteredItems.map((item) => (

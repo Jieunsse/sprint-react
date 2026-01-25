@@ -27,15 +27,23 @@ export function Header() {
           />
         </Link>
 
-        <nav className="ml-8">
+        <nav className="ml-8" aria-label="주요 메뉴">
           <ul className="flex items-center gap-4 list-none p-0 m-0">
             <li>
-              <Link to="/" className={cn(navItem({ active: isFreePage }))}>
+              <Link
+                to="/"
+                className={cn(navItem({ active: isFreePage }))}
+                aria-current={isFreePage ? 'page' : undefined}
+              >
                 자유게시판
               </Link>
             </li>
             <li>
-              <Link to="/items" className={cn(navItem({ active: isItemsPage }))}>
+              <Link
+                to="/items"
+                className={cn(navItem({ active: isItemsPage }))}
+                aria-current={isItemsPage ? 'page' : undefined}
+              >
                 중고마켓
               </Link>
             </li>

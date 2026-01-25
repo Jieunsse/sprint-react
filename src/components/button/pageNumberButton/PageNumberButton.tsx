@@ -75,7 +75,11 @@ export default function PageNumberButton({
 
   const resolvedAriaLabel =
     ariaLabel ??
-    (kind === 'prev' ? '이전 페이지' : kind === 'next' ? '다음 페이지' : '페이지 번호');
+    (kind === 'prev'
+      ? '이전 페이지'
+      : kind === 'next'
+        ? '다음 페이지'
+        : `페이지 ${page ?? ''}`.trim());
 
   return (
     <button
