@@ -20,7 +20,7 @@ const uploadButtonStyles = cva(
 
 export interface UploadButtonProps
   extends
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'>,
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'disabled'>,
     VariantProps<typeof uploadButtonStyles> {
   label?: string;
 }
@@ -32,10 +32,15 @@ export default function UploadButton({
   type = 'button',
   ...props
 }: UploadButtonProps) {
-  const resolvedClassName = cn(uploadButtonStyles({ disabled }), className, 'box-border');
+  const resolvedDisabled = !!disabled;
+  const resolvedClassName = cn(
+    uploadButtonStyles({ disabled: resolvedDisabled }),
+    className,
+    'box-border',
+  );
 
   return (
-    <button type={type} className={resolvedClassName} disabled={disabled} {...props}>
+    <button type={type} className={resolvedClassName} disabled={resolvedDisabled} {...props}>
       <img src={plusIcon} alt="" aria-hidden className="h-[32px] w-[32px]" />
       <span>{label}</span>
     </button>
