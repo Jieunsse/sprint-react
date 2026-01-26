@@ -18,7 +18,7 @@ const previewStyles = cva('relative h-[282px] w-[282px] overflow-hidden rounded-
 const imageStyles = cva('h-full w-full object-cover');
 
 const removeButtonStyles = cva(
-  'absolute right-[8px] top-[8px] inline-flex h-[24px] w-[24px] items-center justify-center rounded-full bg-white/70 transition-opacity',
+  'absolute right-[8px] top-[8px] inline-flex items-center justify-center transition-opacity',
   {
     variants: {
       disabled: {
@@ -57,7 +57,7 @@ export default function UploadPreview({
         className={cn(removeButtonStyles({ disabled: !onRemove }))}
         disabled={!onRemove}
       >
-        <img src={removeIcon} alt="" aria-hidden className="h-[14px] w-[14px]" />
+        <img src={removeIcon} alt="" aria-hidden className="h-[24px] w-[24px]" />
       </button>
     </div>
   );
