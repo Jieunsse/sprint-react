@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import type { HTMLAttributes } from 'react';
 import { cn } from '@src/shared/utils/cn';
-import removeIcon from './assets/ic_X.svg';
+import removeIcon from '../assets/ic_X.svg';
 
 const tagStyles = cva(
   'inline-flex h-[36px] items-center rounded-[26px] bg-[#F3F4F6] py-[6px] pl-[16px] pr-[12px]',
